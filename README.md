@@ -15,10 +15,11 @@ First, install Visual Studio 2017 and Microsoft SQL Server 2017, and also instal
 ---
 Note: This Readme assumes familiarity with Visual Studio and Microsoft SQL Server Management Studio. If you encounter any difficulties during installation or usage, refer to the documentation of these tools or seek assistance from relevant forums or support channels.
 ## Python Environment
-We use Conda to manage our environment. Please follow below steps to create the R-SBFL's Python environment
+We use Conda to manage our environment. Please follow below steps to create the R-SBFL's Python environment.
   ```
-  conda create -n RSBFL python=3.7
+  conda create -n RSBFL python=3.8
   conda activate RSBFL
+  cd RSBFL_Python
   pip install -r requirements.txt
   conda deactivate
   ```
