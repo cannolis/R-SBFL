@@ -310,39 +310,9 @@ class SelfPacedEnsembleClassifier(BaseEnsemble, ClassifierMixin):
             # Update self-paced factor alpha
             alpha = np.tan(np.pi * ((i_estimator + 1) / (2 * self.n_estimators)))
             # Caculate sampling weight
-            b_ratio = np.array([len(bins[i]) / len(X_input) for i in range(self.k_bins)])
-            # weights = 1. / (b_ratio * (ave_contributions + alpha))
-            # weights = 1. / (b_ratio * (np.absolute(ave_contributions - 0.5) + alpha))
-            # weights = ave_contributions + alpha
             # 在有标错数据时，分类器的关注点更应该放在分类难度中等的数据上
-            # weights = 1 - np.absolute(ave_contributions - 0.5) + alpha
-            # weights = np.where(ave_contributions < 0.5, 2*ave_contributions, 1) + alpha
-            # weights = 1. / (np.absolute(ave_contributions - 0.5) + alpha)
-            weights = 1. / (ave_contributions + alpha)
+            weights = 1. / (np.absolute(ave_contributions - 0.5) + alpha)
             weights[np.isnan(weights) | np.isinf(weights)] = 0
-
-            # beta = 1.0 / np.tan(np.pi * (i_estimator / (2 * self.n_estimators + 1)))
-            # b_ratio = np.array([len(bins[i]) / len(X_input) for i in range(self.k_bins)])
-            # sample_rate = b_ratio / (ave_contributions + beta)
-            # sample_rate[np.isnan(sample_rate)] = 0
-
-            # # Caculate Fault Localization sample number from each bin
-            # n_fl_sample_bins = self._ass_num(sample_num, sample_rate)
-            # # Perform Fault Localization self-paced under-sampling
-            # fl_sampled_indexes = []
-            # for f_bins in range(self.k_bins):
-            #     if min(len(bins[f_bins]), n_fl_sample_bins[f_bins]) > 0:
-            #         np.random.seed(self.random_state)
-            #         idx = np.random.choice(
-            #             len(bins[f_bins]),
-            #             min(len(bins[f_bins]), n_fl_sample_bins[f_bins]),
-            #             replace=False)
-            #         fl_sampled_indexes.append(bins_indexs[f_bins][idx])
-            # if len(fl_sampled_indexes) == 1:
-            #     all_sampled_indexes = fl_sampled_indexes[0]
-            # else:
-            #     all_sampled_indexes = np.concatenate(fl_sampled_indexes, axis=0)
-            # sampled_index = {str(y_input[0]): all_sampled_indexes}
 
             # Caculate sample number from each bin
             len_bins = np.array([len(bins[i_bins]) for i_bins in range(len(bins))])
@@ -366,11 +336,6 @@ class SelfPacedEnsembleClassifier(BaseEnsemble, ClassifierMixin):
             else:
                 X_output = np.concatenate(sampled_bins, axis=0)
 
-            # weights = 1 / (hardness + alpha)
-            # weights = weights / weights.sum()
-            # idx = np.random.choice(len(X_input), sample_num, p=weights)
-            # X_output = X_input[idx]
-
             y_output = np.full(X_output.shape[0], y_input[0])
 
         return X_output, y_output
@@ -378,12 +343,8 @@ class SelfPacedEnsembleClassifier(BaseEnsemble, ClassifierMixin):
     def _self_paced_under_sampling(self,
                                    X_maj, y_maj, X_min, y_min, i_estimator):
         """Private function used to perform self-paced under-sampling."""
-
-        # sample_num = math.ceil(4.0 / 5.0 * len(X_min))     # 每次抽样个数是少数类的 2/3
         min_sample_num = len(X_min)
         maj_sample_num = min_sample_num
-        # maj_sample_num = min(len(X_maj), math.ceil(math.sqrt(len(X_maj) * len(X_min))))
-        # sample_num = min(len(X_maj), len(X_min) * 10)
 
         X_train_maj, y_train_maj = self._self_paced_under_sampling_base(X_maj, y_maj, maj_sample_num,
                                                                         i_estimator, self.y_maj_pred_proba_buffer)
@@ -392,11 +353,10 @@ class SelfPacedEnsembleClassifier(BaseEnsemble, ClassifierMixin):
 
         # Handle sparse matrix
         if sp.issparse(X_min):
-            X_train = sp.vstack([sp.csr_matrix(X_train_maj), X_train_min])  # TODO: 这里没看懂
+            X_train = sp.vstack([sp.csr_matrix(X_train_maj), X_train_min])
         else:
             X_train = np.vstack([X_train_maj, X_train_min])
         y_train = np.hstack([y_train_maj, y_train_min])
-        # two_indexes = {**maj_indexes, **min_indexes}
 
         return X_train, y_train
 
@@ -614,20 +574,6 @@ class SelfPacedEnsembleClassifier(BaseEnsemble, ClassifierMixin):
                 X,
                 self.n_classes_)
             for i in range(n_jobs))
-
-
-        # pool = Pool(processes=n_jobs)
-        # all_proba = pool.map(parallel_predict_proba_wrapper, [
-        #     (
-        #         self.estimators_[starts[i]:starts[i + 1]],
-        #         self.estimators_features_[starts[i]:starts[i + 1]],
-        #         X,
-        #         self.n_classes_
-        #     )
-        #     for i in range(n_jobs)
-        # ])
-        # pool.close()
-        # pool.join()
 
         # Reduce
         proba = sum(all_proba) / self.n_estimators

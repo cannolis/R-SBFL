@@ -32,7 +32,7 @@ namespace FaultLocalization
             if (null != result)
             {
                 result.MapLineNumber2ID(sLineMap);
-                // 李成龙添加
+                // Author添加
                 for (int faultIndex = 0; faultIndex < result.Faults.Count; faultIndex++)
                 {
                     for (int faultyStatementsIndex = 0; faultyStatementsIndex < result.Faults[faultIndex].FaultyStatements.Count; faultyStatementsIndex++)

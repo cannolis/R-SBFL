@@ -25,9 +25,9 @@ namespace FrameWorkStatement
             FLDBServer.SetDBServer(AppConfigOperation.GetConfigurationValue("ConnectionString_SQLServer"));
             FLDataBaseTestCase theDataBaseCase = new FLDataBaseTestCase();
             // 实验对象、数据源、存放实验结果的路径
-            string[] suitelist = new string[] { /*"Sed", "defects4j", "Siemens",  "Gzip", "Grep" ,"Flex"/**/ "Space" };
+            string[] suitelist = new string[] { "Sed", "defects4j", "Siemens",  "Gzip", "Grep" ,"Flex", "Space" };
             //string[] suitelist = new string[] { "defects4j", "Flex", "Gzip", "Sed" , "Grep"/*,"Siemens", "Space" */};
-            DirectoryInfo srcInfo = new DirectoryInfo(@"G:\Space");      
+            DirectoryInfo srcInfo = new DirectoryInfo(@"G:\Data");      
             string dataDirectoryName = @"G:\Results";
 
 
@@ -53,19 +53,19 @@ namespace FrameWorkStatement
 
             configure.ChangeSucRatio = -1;// 成例占所有变更用例的比例,若为负数则不区分成例失例
 
-            configure.ClassChangeRatio = 0.1;// 李成龙改 变更标签的用例比例
+            configure.ClassChangeRatio = 0.1;// Author改 变更标签的用例比例
             //configure.MinRuns = 1;/// 最少的测试用例数量
-            configure.MinRuns = Convert.ToInt32(Math.Ceiling(1.0 /configure.ClassChangeRatio));// 李成龙改 最少的测试用例数量  李成龙改 避免因变更比例太小而出现无变更
-            //configure.MaxClassChangeRatioInOriginal = configure.ClassChangeRatio;  // 李成龙改 变更为某类的用例数量最大占原用例数的比例
+            configure.MinRuns = Convert.ToInt32(Math.Ceiling(1.0 /configure.ClassChangeRatio));// Author改 最少的测试用例数量  Author改 避免因变更比例太小而出现无变更
+            //configure.MaxClassChangeRatioInOriginal = configure.ClassChangeRatio;  // Author改 变更为某类的用例数量最大占原用例数的比例
             configure.MaxClassChangeRatioInOriginal = 0.2;
             configure.MaxClassRatio = Double.MaxValue;// 最大类别比例(成例数量:失例数量)
-            //configure.MaxClassRatio = configure.MaxClassChangeRatioInOriginal / configure.ClassChangeRatio;//李成龙改 最大类别比例(成例数量:失例数量)  
+            //configure.MaxClassRatio = configure.MaxClassChangeRatioInOriginal / configure.ClassChangeRatio;//Author改 最大类别比例(成例数量:失例数量)  
             configure.ClassChangeSelectStrategy = "变更用例" + configure.ClassChangeRatio.ToString("0.0000"); // 变更类别用例的选取策略描述
-            configure.WeightFormulaId = 26;// 李成龙改 集成时权值公式索引
-            configure.ClassRatioDivideStrategy = "EnsembleClassifier";//李成龙改 按类别比例拆分用例策略
+            configure.WeightFormulaId = 21;// Author改 集成时权值公式索引
+            configure.ClassRatioDivideStrategy = "EnsembleClassifier";//Author改 按类别比例拆分用例策略
             configure.IntegrateKernel = "NumSExpSort";// 集成加权核
             //configure.serverIP = IPAddress.Loopback;
-            //configure.serverIP = IPAddress.Parse("10.134.99.77");    //服务器ip地址
+            //configure.serverIP = IPAddress.Parse("xx.xxx.xx.xx");    //服务器ip地址
             configure.serverIP = IPAddress.Parse("127.0.0.1");    //本地
             configure.port = 12223;
 
@@ -76,7 +76,7 @@ namespace FrameWorkStatement
             RunAll haha = new RunAll(srcInfo);
             haha.MethodList = methodlist;
 
-            #region //李成龙添加 打开客户端，准备开始与服务端通信
+            #region //Author添加 打开客户端，准备开始与服务端通信
             SocketClient client = new SocketClient(configure.serverIP, configure.port);
             if (client.Connect() != true)
             {
@@ -85,29 +85,29 @@ namespace FrameWorkStatement
             configure.client = client;
             # endregion
 
-            string tempStrategy = configure.ClassChangeSelectStrategy;  //李成龙添加 临时存储一下
+            string tempStrategy = configure.ClassChangeSelectStrategy;  //Author添加 临时存储一下
 
             for (int suiteIndex = 0; suiteIndex < suitelist.Length; suiteIndex++)
             {
                 int iNumFaults = -1;
                 configure.SuiteName = suitelist[suiteIndex];
 
-                configure.ClassChangeSelectStrategy = "不变更用例";   //李成龙添加 必须要改变cfg，因为后续向数据库写入时需要用到
-                string desc0 = "不变更用例" + "_集成";  //李成龙添加 必须要改变cfg，因为后续向数据库写入时需要用到
+                configure.ClassChangeSelectStrategy = "不变更用例";   //Author添加 必须要改变cfg，因为后续向数据库写入时需要用到
+                string desc0 = "不变更用例" + "_集成";  //Author添加 必须要改变cfg，因为后续向数据库写入时需要用到
 
 
-                //#region /*不集成*/
-                //Console.Write("开始" + configure.SuiteName + "不集成" + "\r\n");
-                //haha.NoSpecialOperationExperimentOf(configure.SuiteName, configure);
-                //Console.Write("完成" + configure.SuiteName + "不集成" + "\r\n");
-                //#endregion
+                #region /*不集成*/
+                Console.Write("开始" + configure.SuiteName + "不集成" + "\r\n");
+                haha.NoSpecialOperationExperimentOf(configure.SuiteName, configure);
+                Console.Write("完成" + configure.SuiteName + "不集成" + "\r\n");
+                #endregion
 
                 #region/*不变更测试用例的集成实验*/
-                // 李成龙改
+                // Author改
                 Console.Write("开始:" + configure.SuiteName + ":" + desc0 + "\r\n");
                 Console.Write("Repeating Times:" + configure.RepeatTimes + "\r\n");
 
-                //haha.NoChangeClassEnsembleSortExperimentof(configure.SuiteName, configure);
+                haha.NoChangeClassEnsembleSortExperimentof(configure.SuiteName, configure);
 
                 Console.Write("完成:" + configure.SuiteName + ":" + desc0 + "\r\n");
 
@@ -134,45 +134,45 @@ namespace FrameWorkStatement
 
                 #endregion
 
-                configure.ClassChangeSelectStrategy = tempStrategy; //李成龙添加 将变更比例更改回来
+                configure.ClassChangeSelectStrategy = tempStrategy; //Author添加 将变更比例更改回来
                 string desc1 = configure.ClassChangeSelectStrategy + "_不集成";
                 string desc2 = configure.ClassChangeSelectStrategy + "_集成";
 
-                //#region/*变更测试用例的不集成实验*/
-                ////string desc1 = configure.ClassChangeSelectStrategy + "_不集成";
-                //Console.WriteLine("开始:" + configure.SuiteName + ":" + desc1);
-                //Console.Write("Repeating Times:" + configure.RepeatTimes + "\r\n");
-                //haha.ChangeClassExperimentof(configure.SuiteName, configure);
-                //Console.WriteLine("完成:" + configure.SuiteName + ":" + desc1);
+                #region/*变更测试用例的不集成实验*/
+                //string desc1 = configure.ClassChangeSelectStrategy + "_不集成";
+                Console.WriteLine("开始:" + configure.SuiteName + ":" + desc1);
+                Console.Write("Repeating Times:" + configure.RepeatTimes + "\r\n");
+                haha.ChangeClassExperimentof(configure.SuiteName, configure);
+                Console.WriteLine("完成:" + configure.SuiteName + ":" + desc1);
 
-                ////#region 输出excel 对比分析扰动影响（鲁棒性）
-                /////*输出1缺陷Excel*/
-                ////iNumFaults = 1;
-                ////Console.WriteLine("The number of faults:" + iNumFaults);
-                ////FLExcelAB.ABAveAsExcel(configure, configure.SuiteName, iNumFaults, haha.MethodList.ToList(), desc1, dataDirectoryName);
-                ////Console.WriteLine("完成" + configure.SuiteName + "单缺陷结果输出");
+                //#region 输出excel 对比分析扰动影响（鲁棒性）
+                ///*输出1缺陷Excel*/
+                //iNumFaults = 1;
+                //Console.WriteLine("The number of faults:" + iNumFaults);
+                //FLExcelAB.ABAveAsExcel(configure, configure.SuiteName, iNumFaults, haha.MethodList.ToList(), desc1, dataDirectoryName);
+                //Console.WriteLine("完成" + configure.SuiteName + "单缺陷结果输出");
 
-                /////*输出2缺陷Excel*/
-                ////iNumFaults = 2;
-                ////Console.WriteLine("The number of faults:" + iNumFaults);
-                ////FLExcelAB.ABAveAsExcel(configure, configure.SuiteName, iNumFaults, haha.MethodList.ToList(), desc1, dataDirectoryName);
-                ////Console.WriteLine("完成" + configure.SuiteName + "2缺陷结果输出");
+                ///*输出2缺陷Excel*/
+                //iNumFaults = 2;
+                //Console.WriteLine("The number of faults:" + iNumFaults);
+                //FLExcelAB.ABAveAsExcel(configure, configure.SuiteName, iNumFaults, haha.MethodList.ToList(), desc1, dataDirectoryName);
+                //Console.WriteLine("完成" + configure.SuiteName + "2缺陷结果输出");
 
-                /////*输出3缺陷Excel*/
-                ////iNumFaults = 3;//郑征改
-                ////Console.WriteLine("The number of " + "faults" + ":" + iNumFaults);
-                ////FLExcelAB.ABAveAsExcel(configure, configure.SuiteName, iNumFaults, haha.MethodList.ToList(), desc1, dataDirectoryName);
-                ////Console.WriteLine("完成" + configure.SuiteName + "3缺陷结果输出");
-                ////#endregion
-
+                ///*输出3缺陷Excel*/
+                //iNumFaults = 3;//Second Author改
+                //Console.WriteLine("The number of " + "faults" + ":" + iNumFaults);
+                //FLExcelAB.ABAveAsExcel(configure, configure.SuiteName, iNumFaults, haha.MethodList.ToList(), desc1, dataDirectoryName);
+                //Console.WriteLine("完成" + configure.SuiteName + "3缺陷结果输出");
                 //#endregion
 
+                #endregion
+
                 #region/*变更测试用例的集成实验 */
-                // 李成龙改
+                // Author改
                 Console.Write("开始:" + configure.SuiteName + ":" + desc2 + "\r\n");
                 Console.Write("Repeating Times:" + configure.RepeatTimes + "\r\n");
 
-                //haha.ChangeClassEnsembleSortExperimentof(configure.SuiteName, configure);
+                haha.ChangeClassEnsembleSortExperimentof(configure.SuiteName, configure);
 
                 Console.Write("完成:" + configure.SuiteName + ":" + desc2 + "\r\n");
 
@@ -222,7 +222,7 @@ namespace FrameWorkStatement
             }
 
 
-            //李成龙添加 关闭客户端
+            //Author添加 关闭客户端
             client.Close();
 
         }

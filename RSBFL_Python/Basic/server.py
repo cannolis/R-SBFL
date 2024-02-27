@@ -3,7 +3,6 @@ import socket
 
 def server_program():
     # get the hostname
-    # host = "192.168.137.35"
     host = socket._LOCALHOST_V6
     print(host)
     port = 22222  # initiate port no above 1024
