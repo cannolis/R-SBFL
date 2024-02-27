@@ -32,7 +32,7 @@ As for the Python program, change the parameters (host, user_name, password and 
   cd RSBFL_Python
   python run_divider.py
   ```
-After the Python program is running, follow the steps below to run the C# program so that it can establish communication with the Python program. First, double-click on the FrameWorkStatement.sln. When the Microsoft Visual Studio is open, change the "DirectoryInfo" _srcInfo_ to your data dictionary, and change the _dataDirectoryName_ to your result dictionary. Then, use Ctrl + F5 to run the solution, and you will see the console output and then press any key to start running the whole program. When the running terminates, the experimental results will be stored in an Excel file within the output folder you have specified.
+After the Python program is running, follow the steps below to run the C# program so that it can establish communication with the Python program. First, double-click on the FrameWorkStatement.sln. When the Microsoft Visual Studio is open, change the "DirectoryInfo" _srcInfo_ to your data dictionary, and change the _dataDirectoryName_ to your result dictionary. Then, use Ctrl + F5 to run the solution, and you will see the console output and then press any key to start running the whole program. When the running terminates, the experimental results will be stored in Excel files within the output folder you have specified.
 
 -----------------------------------
 Note: This readme assumes familiarity with Microsoft Visual Studio and Microsoft SQL Server Management Studio. If you encounter any difficulties during installation or usage, refer to the documentation of these tools or seek assistance from relevant forums or support channels.
