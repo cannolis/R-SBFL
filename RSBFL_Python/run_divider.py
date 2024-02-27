@@ -37,7 +37,6 @@ RANDOM_STATE = 42
 # Parse arguments
 
 method = 'CleanLab'
-# method = 'LocalOutlierFactor'
 
 database_args = DATABASE("localhost", "sa", "Temp123456", "SoftwareFaultLocalization")  # 本地ip地址
 # database_args = DATABASE("xx.xxx.xx.xx:1433", "sa", "Temp123456", "SoftwareFaultLocalization")  # 客户端ip地址
@@ -62,9 +61,7 @@ def init_model(method, base_estimator, n_estimators):
     if method == 'CleanLab':
         model = SelfPacedEnsembleClassifier(base_estimator=base_estimator, n_estimators=n_estimators, random_state=RANDOM_STATE)
     else:
-        raise ValueError(f'Do not support method {method}. Only accept \
-            \'SPEnsemble\', \'SMOTEBoost\', \'SMOTEBagging\', \'RUSBoost\', \
-            \'UnderBagging\', \'Cascade\'.')
+        raise ValueError(f'Do not support method {method}.)
     return model
 
 
@@ -215,7 +212,7 @@ def main():
             X_train_original, y_train_original = covDataBase.read_cov_matrix_info(ID, "不变更用例", 0)
             covDataBase.close()
 
-            # 对X_train进行降维 降维到开根后的维数
+            # 对X_train进行降维
             time1 = time.time()
             # print("降维之前的维度:{}".format(len(X_train[0])))
             n_components = min(len(X_train_original) - 1, math.ceil(np.sqrt(len(X_train_original[0]))))
