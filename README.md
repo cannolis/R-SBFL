@@ -1,6 +1,6 @@
 # R-SBFL: Enhancing Robustness in Spectrum-Based Fault Localization
 ## Experimental Data
-The subject suites studied in our work are collected at [here](https://www.dropbox.com/scl/fi/rgblrvo2h8ztlwsr39us5/Data.zip?rlkey=hgcnmz863fvhd4ecet9qn9y4n&dl=0), which contains Siemens, Unix utilities, Space and Defects4J[1,2,3,4]. Each subject program has been packaged with several fault versions containing the spectrum of the passed and failed test cases and the location of faults. The details of these test suites are outlined in our paper titled "R-SBFL: Enhancing Robustness in Spectrum-Based Fault Localization." After downloading the .zip file, unzip it in a directory to save these test suites.
+The subject suites studied in our work are collected at [here](https://www.dropbox.com/scl/fi/rgblrvo2h8ztlwsr39us5/Data.zip?rlkey=hgcnmz863fvhd4ecet9qn9y4n&dl=0), which contains Siemens, Unix utilities, Space and Defects4J[<sup>1</sup>](#refer-anchor-1),[<sup>2</sup>](#refer-anchor-2)[<sup>3</sup>](#refer-anchor-3),[<sup>4</sup>](#refer-anchor-4). Each subject program has been packaged with several fault versions containing the spectrum of the passed and failed test cases and the location of faults. The details of these test suites are outlined in our paper titled "R-SBFL: Enhancing Robustness in Spectrum-Based Fault Localization." After downloading the .zip file, unzip it in a directory to save these test suites.
 
 ## Experimental Program
 Our experimental program comprises two essential components: a Python program named _RSBFL_Python_for data preprocessing and test suite splitting and a C# program named _RSBFL_C#_for sub-locators construction and integration. These two components seamlessly collaborate by partitioning their tasks and facilitating communication through socket connections, and they utilize SQL Server for large-scale data transmission. Regarding the SQL Server database files and log files constructed before the research, they have also been uploaded.
@@ -40,8 +40,12 @@ After the Python program is running, follow the steps below to run the C# progra
 Note: This readme assumes familiarity with Microsoft Visual Studio and Microsoft SQL Server Management Studio. If you encounter any difficulties during installation or usage, refer to the documentation of these tools or seek assistance from relevant forums or support channels.
 
 ## Reference
-1. Hyunsook Do, Sebastian Elbaum, and Gregg Rothermel. 2005. Supporting Controlled Experimentation with Testing Techniques: An Infrastructure and Its Potential Impact. Empirical Software Engineering 10 (2005), 405–435. https://doi.org/10.1007/s10664-005-3861-2
-2. Ross Gore and Paul Reynolds. 2012. Reducing Confounding Bias in Predicate-Level Statistical Debugging Metrics. In 2012 34th International Conference on Software Engineering. 463–473. https://doi.org/10.1109/ICSE.2012.6227169
-3. René Just, Darioush Jalali, and Michael D. Ernst. 2014. Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs. In Proceedings of the 2014 International Symposium on Software Testing and Analysis. Association for Computing Machinery, 437–440. https://doi.org/10.1145/2610384.2628055
-4. Kai Yu, Mengxiang Lin, Qing Gao, Hui Zhang, and Xiangyu Zhang. 2011. Locating Faults Using Multiple Spectra-Specific Models. In Proceedings of the 2011 ACM Symposium on Applied Computing. Association for Computing Machinery, 1404–1410. https://doi.org/10.1145/1982185.1982490
+<div id="refer-anchor-1"></div>
+- [1] Hyunsook Do, Sebastian Elbaum, and Gregg Rothermel. 2005. Supporting Controlled Experimentation with Testing Techniques: An Infrastructure and Its Potential Impact. Empirical Software Engineering 10 (2005), 405–435. https://doi.org/10.1007/s10664-005-3861-2
+<div id="refer-anchor-2"></div>
+- [2] Ross Gore and Paul Reynolds. 2012. Reducing Confounding Bias in Predicate-Level Statistical Debugging Metrics. In 2012 34th International Conference on Software Engineering. 463–473. https://doi.org/10.1109/ICSE.2012.6227169
+<div id="refer-anchor-3"></div>
+- [3] René Just, Darioush Jalali, and Michael D. Ernst. 2014. Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs. In Proceedings of the 2014 International Symposium on Software Testing and Analysis. Association for Computing Machinery, 437–440. https://doi.org/10.1145/2610384.2628055
+<div id="refer-anchor-4"></div>
+- [4] Kai Yu, Mengxiang Lin, Qing Gao, Hui Zhang, and Xiangyu Zhang. 2011. Locating Faults Using Multiple Spectra-Specific Models. In Proceedings of the 2011 ACM Symposium on Applied Computing. Association for Computing Machinery, 1404–1410. https://doi.org/10.1145/1982185.1982490
 
