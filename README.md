@@ -43,11 +43,14 @@ Note: This readme assumes familiarity with Microsoft Visual Studio and Microsoft
 <div id="refer-anchor-1"></div>
 - [1] Hyunsook Do, Sebastian Elbaum, and Gregg Rothermel. 2005. Supporting Controlled Experimentation with Testing Techniques: An Infrastructure and Its Potential Impact. Empirical Software Engineering 10 (2005), 405–435. https://doi.org/10.1007/s10664-005-3861-2
 
+
 <div id="refer-anchor-2"></div>
 - [2] Ross Gore and Paul Reynolds. 2012. Reducing Confounding Bias in Predicate-Level Statistical Debugging Metrics. In 2012 34th International Conference on Software Engineering. 463–473. https://doi.org/10.1109/ICSE.2012.6227169
 
+
 <div id="refer-anchor-3"></div>
 - [3] René Just, Darioush Jalali, and Michael D. Ernst. 2014. Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs. In Proceedings of the 2014 International Symposium on Software Testing and Analysis. Association for Computing Machinery, 437–440. https://doi.org/10.1145/2610384.2628055
+
 
 <div id="refer-anchor-4"></div>
 - [4] Kai Yu, Mengxiang Lin, Qing Gao, Hui Zhang, and Xiangyu Zhang. 2011. Locating Faults Using Multiple Spectra-Specific Models. In Proceedings of the 2011 ACM Symposium on Applied Computing. Association for Computing Machinery, 1404–1410. https://doi.org/10.1145/1982185.1982490
